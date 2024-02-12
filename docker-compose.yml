@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  ubuntu-container:
+    image: image-daw-12
+    networks:
+      mi-red:
+        ipv4_address: 172.100.0.19
+    ports:
+      - "8080:80"
+    volumes:
+      - mi-daw-12:/app/data
+    container_name: mi-daw-12
+    stdin_open: true
+    tty: true
+
+networks:
+  mi-red:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.100.0.0/16
+
+volumes:
+  mi-daw-12:
+    driver: local
