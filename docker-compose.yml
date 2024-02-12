@@ -1,26 +1,26 @@
 version: "3"
 
 services:
-  ubuntu-container:
-    image: image-daw-12
+  mongodb:
+    image: mongo
+    restart: always
     networks:
-      mi-red:
-        ipv4_address: 172.100.0.19
-    ports:
-      - "8080:80"
+      - my-network
     volumes:
-      - mi-daw-12:/app/data
-    container_name: mi-daw-12
-    stdin_open: true
-    tty: true
+      - mongo-data:/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    networks:
+      - my-network
 
 networks:
-  mi-red:
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.100.0.0/16
+  my-network:
 
 volumes:
-  mi-daw-12:
-    driver: local
+  mongo-data:
