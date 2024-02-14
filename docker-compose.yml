@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  mongodb:
+    image: mongo
+    restart: always
+    networks:
+      - my-network
+    volumes:
+      - mongo-data:/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    networks:
+      - my-network
+
+networks:
+  my-network:
+
+volumes:
+  mongo-data:
