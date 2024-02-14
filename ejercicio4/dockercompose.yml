@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+    mi-mysql:
+        image: mysql
+        restart: always
+        volumes:
+            - mi-mysql-vol:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: my-secret-pw
+        networks:
+            - mi-mysqlred
+
+    mi-dashboard:
+        image: phpmyadmin/phpmyadmin
+        restart: always
+        ports:
+            - "8080:80"
+        environment:
+            PMA_HOST: mi-mysql
+            MYSQL_ROOT_PASSWORD: my-secret-pw
+        networks:
+            - mi-mysqlred
+
+volumes:
+    mi-mysql-vol:
+
+networks:
+    mi-mysqlred:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.25.0.0/16
