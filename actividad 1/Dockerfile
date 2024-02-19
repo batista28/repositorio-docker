@@ -2,7 +2,8 @@ FROM node:14
 
 WORKDIR /var/app
 
-COPY ..
+COPY . /var/app
+
 
 COPY .dockerignore .
 
