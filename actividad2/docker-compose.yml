@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  mi-mongo:
+    image: mongo
+    volumes:
+      - mongo-vol:/data/db
+    networks:
+      - mongo-node-net
+
+  mi-node:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mi-node-image
+    expose:
+      - 3000
+    networks:
+      - mongo-node-net
+      - node-nginx-net
+
+  mi-nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    networks:
+      - node-nginx-net
+
+networks:
+  mongo-node-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.40.0.0/16
+
+  node-nginx-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.80.0.0/16
+
+volumes:
+  mongo-vol:
