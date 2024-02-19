@@ -12,9 +12,8 @@ RUN npm install
 
 # Copia el resto de los archivos de la aplicación
 COPY . .
-
 # Expone el puerto en el que la aplicación Node.js está escuchando
 EXPOSE 3000
 
 # Comando para ejecutar la aplicación
-CMD ["node", "index.js"] 
+CMD ["node", "start"] 
